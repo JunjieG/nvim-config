@@ -316,46 +316,6 @@ if g:is_win
   let g:asyncrun_encs = 'gbk'
 endif
 
-""""""""""""""""""""""""""""""firenvim settings""""""""""""""""""""""""""""""
-if exists('g:started_by_firenvim') && g:started_by_firenvim
-  if g:is_mac
-    set guifont=Iosevka\ Nerd\ Font:h18
-  else
-    set guifont=Consolas
-  endif
-
-  " general config for firenvim
-  let g:firenvim_config = {
-      \ 'globalSettings': {
-          \ 'alt': 'all',
-      \  },
-      \ 'localSettings': {
-          \ '.*': {
-              \ 'cmdline': 'neovim',
-              \ 'priority': 0,
-              \ 'selector': 'textarea',
-              \ 'takeover': 'never',
-          \ },
-      \ }
-  \ }
-
-  function s:setup_firenvim() abort
-    set signcolumn=no
-    set noruler
-    set noshowcmd
-    set laststatus=0
-    set showtabline=0
-  endfunction
-
-  augroup firenvim
-    autocmd!
-    autocmd BufEnter * call s:setup_firenvim()
-    autocmd BufEnter sqlzoo*.txt set filetype=sql
-    autocmd BufEnter github.com_*.txt set filetype=markdown
-    autocmd BufEnter stackoverflow.com_*.txt set filetype=markdown
-  augroup END
-endif
-
 """"""""""""""""""""""""""""""nvim-gdb settings""""""""""""""""""""""""""""""
 nnoremap <leader>dp :<C-U>GdbStartPDB python -m pdb %<CR>
 

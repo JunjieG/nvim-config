@@ -14,11 +14,6 @@ if not vim.uv.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
--- check if firenvim is active
-local firenvim_not_active = function()
-  return not vim.g.started_by_firenvim
-end
-
 local plugin_specs = {
   -- auto-completion engine
   {
@@ -142,7 +137,6 @@ local plugin_specs = {
   {
     "nvim-lualine/lualine.nvim",
     event = "VeryLazy",
-    cond = firenvim_not_active,
     config = function()
       require("config.statusline")
     end,
@@ -151,7 +145,6 @@ local plugin_specs = {
   {
     "akinsho/bufferline.nvim",
     event = { "BufEnter" },
-    cond = firenvim_not_active,
     config = function()
       require("config.bufferline")
     end,
@@ -160,7 +153,6 @@ local plugin_specs = {
   -- fancy start screen
   {
     "nvimdev/dashboard-nvim",
-    cond = firenvim_not_active,
     config = function()
       require("config.dashboard-nvim")
     end,
@@ -409,21 +401,6 @@ local plugin_specs = {
   -- Asynchronous command execution
   { "skywind3000/asyncrun.vim", lazy = true, cmd = { "AsyncRun" } },
   { "cespare/vim-toml", ft = { "toml" }, branch = "main" },
-
-  -- Edit text area in browser using nvim
-  {
-    "glacambre/firenvim",
-    enabled = function()
-      if vim.g.is_win or vim.g.is_mac then
-        return true
-      end
-      return false
-    end,
-    build = function()
-      vim.fn["firenvim#install"](0)
-    end,
-    lazy = true,
-  },
 
   -- Debugger plugin
   {
